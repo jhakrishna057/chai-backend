@@ -15,8 +15,8 @@ app.use(cookieparser())
 
 
 // importing router 
-import { Router } from "express"
-import { upload } from "./middlewares/multer.midddleware.js"
+//import { Router } from "express"
+//import { upload } from "./middlewares/multer.midddleware.js"
 import userRoute from "./routes/user.route.js"
 app.use("/api/v1/user",userRoute)
    
