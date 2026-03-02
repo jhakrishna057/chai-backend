@@ -2,7 +2,7 @@ import{json, Router} from "express"
 import { upload } from "../middlewares/multer.midddleware.js"
 import { loginUser, logoutUser, registerUser } from "../controllers/user.controller.js"
 import { verifyJWT } from "../middlewares/auth.middleware.js"
-import { ApiResponse } from "../utils/ApiResponse.js"
+
 
 
 const router =new Router()

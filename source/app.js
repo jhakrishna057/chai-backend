@@ -20,7 +20,15 @@ app.use(cookieparser())
 import userRoute from "./routes/user.route.js"
 app.use("/api/v1/user",userRoute)
 
-   
+// Global Error Middleware
+// app.use((err, req, res, next) => {
+//   console.log("ERROR CAUGHT:", err);
+
+//   return res.status(err.statusCode || 500).json({
+//     success: false,
+//     message: err.message || "Internal Server Error",
+//   });
+// });  
 
 
 

@@ -1,9 +1,9 @@
 import { ApiError } from "../utils/ApiError.js";
 import { AssyncHandler } from "../utils/AssyncHandler.js";
-import  JsonWebToken  from "jsonwebtoken";
+import  jwt  from "jsonwebtoken";
 import { User } from "../models/user.models.js";
 
-const {jwt}=JsonWebToken
+
 
 export const verifyJWT=AssyncHandler(async(req ,_ ,next)=>{
     
@@ -13,6 +13,7 @@ export const verifyJWT=AssyncHandler(async(req ,_ ,next)=>{
         if(!token){
             throw new ApiError(401,"unauthorized user")
         }
+        console.log(`inside authmiddleware and token is ${token}`)
     
         const decodedToken=jwt.verify(token,process.env.ACCESS_TOKEN_SECRET)
     

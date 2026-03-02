@@ -9,6 +9,7 @@ dotenv.config({
 conncectDB().then(()=>{
     app.listen(process.env.PORT || 8000,()=>{
         console.log(`app is listening on ${process.env.PORT}`);
+        console.log(`process token secret${process.env.ACCESS_TOKEN_SECRET}`)
         
     })
 })

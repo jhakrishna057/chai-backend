@@ -9,6 +9,7 @@ const generateRefreshAndAccesstoken=async(userId)=>{
   try{
     
     const user=await User.findById(userId)
+    console.log(`user in side the fucntion:${user}`)
     const accessToken=user.generateAccessToken()
     const refreshToken=user.generateRefreshToken()
 
@@ -18,9 +19,13 @@ const generateRefreshAndAccesstoken=async(userId)=>{
 
     return {accessToken,refreshToken}
 
-  }catch(e){
-    throw new ApiResponse(403,"something went wrong while generating accessToken and refreshToken")
-  } 
+  }catch (e) {
+  console.log("ACTUAL ERROR:", e)
+  throw new ApiError(
+    500,
+    e?.message || "Token generation failed"
+  )
+}
 }
 
 
@@ -120,8 +125,9 @@ const loginUser = AssyncHandler(async (req, res) => {
     throw new ApiError(401, "Password is wrong");
   }
 
-  const { accessToken, refreshToken } =
-    await generateRefreshAndAccesstoken(user._id);
+  const { accessToken, refreshToken } =await generateRefreshAndAccesstoken(user._id);
+    
+    
 
   const loggedInUser = await User.findById(user._id)
     .select("-password -refreshToken");
@@ -142,6 +148,7 @@ const loginUser = AssyncHandler(async (req, res) => {
       )
     );
 });
+
 const logoutUser=AssyncHandler(async (req , res)=>{
     await User.findByIdAndUpdate(
       req.user?._id,
