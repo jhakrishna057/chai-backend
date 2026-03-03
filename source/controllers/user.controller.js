@@ -9,7 +9,7 @@ const generateRefreshAndAccesstoken=async(userId)=>{
   try{
     
     const user=await User.findById(userId)
-    console.log(`user in side the fucntion:${user}`)
+
     const accessToken=user.generateAccessToken()
     const refreshToken=user.generateRefreshToken()
 
@@ -99,7 +99,6 @@ const registerUser = AssyncHandler(async (req, res) => {
 
 const loginUser = AssyncHandler(async (req, res) => {
 
-  console.log("Login body:", req.body);
 
   const { email, password, username } = req.body;
 
@@ -149,6 +148,7 @@ const loginUser = AssyncHandler(async (req, res) => {
     );
 });
 
+
 const logoutUser=AssyncHandler(async (req , res)=>{
     await User.findByIdAndUpdate(
       req.user?._id,
@@ -158,7 +158,7 @@ const logoutUser=AssyncHandler(async (req , res)=>{
         }
       },
       {
-        new:true
+        returnDocument:"after"
       }
     )
 
@@ -167,11 +167,11 @@ const logoutUser=AssyncHandler(async (req , res)=>{
       secure:true
     }
 
-    return res.status(404)
-    .clearcookie("refreshToken",options)
-    .clearcookie("accessToken",options)
+    return res.status(408)
+    .clearCookie("refreshToken",options)
+    .clearCookie("accessToken",options)
     .json(
-      new ApiError(404,"log out successfully")
+      new ApiResponse(200, null, "Logged out successfully")
     )
 })
 
