@@ -27,8 +27,6 @@ const generateRefreshAndAccesstoken=async(userId)=>{
   )
 }
 }
-
-
 const registerUser = AssyncHandler(async (req, res) => {
 
   const { fullName, email, username, password } = req.body;
@@ -178,5 +176,6 @@ const logoutUser=AssyncHandler(async (req , res)=>{
 export{ 
     registerUser,
     loginUser,
-    logoutUser
+    logoutUser,
+    refreshAccessToken
 };
