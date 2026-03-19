@@ -7,14 +7,16 @@ import { User } from "../models/user.models.js";
 export const verifyJWT=AssyncHandler(async(req ,_ ,next)=>{
     
     try {
-        const token= req.cookies?.refreshToken || req.header("Authorization")?.replace("Bearer ","")
+        const token= req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ","")
     
         if(!token){
             throw new ApiError(401,"unauthorized user")
         }
-        
+        console.log("Cookies:", req.cookies)
+        console.log("Auth Header:", req.header("Authorization"))
+        console.log("Token:", token)
     
-        const decodedToken=jwt.verify(token,process.env.REFRESH_TOKEN_SECRET)
+        const decodedToken=jwt.verify(token,process.env.ACCESS_TOKEN_SECRET)
     
         if(!decodedToken){
             throw new ApiError(402,"problem in decoding token")
